@@ -1,6 +1,5 @@
 #include "render.hpp"
 #include <cstring>
-#include <curses.h>
 
 Renderer::Renderer() {
   m_window = initscr();

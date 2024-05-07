@@ -1,6 +1,7 @@
 #ifndef RENDER_HPP
 #define RENDER_HPP
 #include "snake.hpp"
+#include <curses.h>
 
 class Renderer {
 private:

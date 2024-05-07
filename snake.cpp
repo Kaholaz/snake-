@@ -1,8 +1,5 @@
 #include "snake.hpp"
-#include <cstring>
-#include <curses.h>
 #include <functional>
-#include <memory>
 #include <sstream>
 
 std::ostream &operator<<(std::ostream &ostream, const Direction &dir) {
@@ -77,7 +74,6 @@ Snake::Snake(const Point &startPos, const Direction &startDirection)
 }
 
 void Snake::Turn(const Direction &&direction) {
-  printw("%s\n", ToString(direction)->c_str());
   std::lock_guard lg(lock_direction);
 
   if (((m_direction == Direction::UP) && (direction == Direction::DOWN)) ||

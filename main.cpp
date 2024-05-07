@@ -1,7 +1,6 @@
 #include "render.hpp"
 #include "snake.hpp"
 #include <chrono>
-#include <curses.h>
 #include <functional>
 #include <memory>
 #include <thread>
