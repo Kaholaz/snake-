@@ -51,14 +51,6 @@ public:
   }
 };
 
-bool ColidesWithBoundries(const Point &boundries, const Snake &snake) {
-  const auto &headPos = snake.Head();
-  return (
-    (headPos.x == 0 || headPos.x == boundries.x) || 
-    (headPos.y == 0 || headPos.y == boundries.y)
-  );
-}
-
 int main() {
   srand(time(0));
   Window();
@@ -89,7 +81,7 @@ int main() {
       snake->Retract();
     }
 
-    if (ColidesWithBoundries(bounderies, *snake)) {
+    if (snake->CollidesWithBoundries(bounderies)) {
       *playing = false;
     }
   }

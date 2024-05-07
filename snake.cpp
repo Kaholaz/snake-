@@ -112,6 +112,14 @@ const bool Snake::OnSnakeBody(const Point &point) const {
                        }) != m_snake.end());
 }
 
+const bool Snake::CollidesWithBoundries(const Point &boundries) const {
+  const auto &headPos = Head();
+  return (
+    (headPos.x == 0 || headPos.x == boundries.x) || 
+    (headPos.y == 0 || headPos.y == boundries.y)
+  );
+}
+
 Apple::Apple() {
   m_pos = std::make_unique<Point>(0,0);
 }

@@ -51,6 +51,7 @@ public:
   const Direction &GetDirection() const;
   const bool OnSnake(const Point &point) const;
   const bool OnSnakeBody(const Point &point) const;
+  const bool CollidesWithBoundries(const Point &boundries) const;
 
   void Grow();
   void Retract();
