@@ -48,7 +48,7 @@ int main() {
   auto setDirection = ([snake](const Direction &&direction) -> void {
     snake->Turn(std::move(direction));
   });
-  auto thread = std::thread(ListenForKeys, setDirection, playing);
+  auto keyThread = std::thread(ListenForKeys, setDirection, playing);
 
   auto t0 =
       std::chrono::system_clock::now() - std::chrono::milliseconds(FRAME_TIME);
@@ -74,5 +74,5 @@ int main() {
   }
 
   render.GameOver();
-  thread.join();
+  keyThread.join();
 }
