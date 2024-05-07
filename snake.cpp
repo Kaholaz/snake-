@@ -1,8 +1,8 @@
 #include "snake.hpp"
-#include <functional>
-#include <memory>
 #include <cstring>
 #include <curses.h>
+#include <functional>
+#include <memory>
 
 std::ostream &operator<<(std::ostream &ostream, const Direction &dir) {
   switch (dir) {
@@ -39,7 +39,8 @@ Point Point::operator+(const Point &other) const {
   return Point(x + other.x, y + other.y);
 }
 const std::unique_ptr<std::string> Point::ToString() const {
-  return std::make_unique<std::string>("Point(=" + std::to_string(x) + ", y=" + std::to_string(y) + ")");
+  return std::make_unique<std::string>("Point(=" + std::to_string(x) +
+                                       ", y=" + std::to_string(y) + ")");
 }
 const bool Point::operator==(const Point &other) const {
   return x == other.x && y == other.y;
@@ -78,17 +79,13 @@ void Snake::Turn(const Direction &&direction) {
       ((m_direction == Direction::RIGHT) && (direction == Direction::LEFT))) {
     return;
   }
-  
+
   m_to_turn = direction;
 }
 
-const Direction &Snake::GetDirection() const {
-  return m_direction;
-}
+const Direction &Snake::GetDirection() const { return m_direction; }
 
-const Point &Snake::Head() const {
-  return *m_snake.back();
-}
+const Point &Snake::Head() const { return *m_snake.back(); }
 
 void Snake::Grow() {
   m_direction = m_to_turn;
@@ -114,20 +111,14 @@ const bool Snake::OnSnakeBody(const Point &point) const {
 
 const bool Snake::CollidesWithBoundries(const Point &boundries) const {
   const auto &headPos = Head();
-  return (
-    (headPos.x == 0 || headPos.x == boundries.x) || 
-    (headPos.y == 0 || headPos.y == boundries.y)
-  );
+  return ((headPos.x == 0 || headPos.x == boundries.x) ||
+          (headPos.y == 0 || headPos.y == boundries.y));
 }
 
-Apple::Apple() {
-  m_pos = std::make_unique<Point>(0,0);
-}
+Apple::Apple() { m_pos = std::make_unique<Point>(0, 0); }
 void Apple::Randomize(const Point &boundries) {
   int x = std::rand() % (boundries.x - 1) + 1;
   int y = std::rand() % (boundries.y - 1) + 1;
   m_pos = std::make_unique<Point>(x, y);
 }
-const Point &Apple::GetPos() const {
-  return *m_pos;
-}
+const Point &Apple::GetPos() const { return *m_pos; }

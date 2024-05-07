@@ -2,11 +2,11 @@
 #define SNAKE_HPP
 
 #include <deque>
-#include <memory>
-#include <ranges>
 #include <iostream>
-#include <random>
+#include <memory>
 #include <mutex>
+#include <random>
+#include <ranges>
 #include <string>
 
 enum Direction {
@@ -60,6 +60,7 @@ public:
 class Apple {
 private:
   std::unique_ptr<Point> m_pos;
+
 public:
   Apple();
   ~Apple() = default;

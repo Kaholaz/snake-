@@ -1,10 +1,10 @@
 #include "render.hpp"
 #include "snake.hpp"
+#include <chrono>
+#include <curses.h>
+#include <functional>
 #include <memory>
 #include <thread>
-#include <chrono>
-#include <functional>
-#include <curses.h>
 
 #define FRAME_TIME 250
 
@@ -14,10 +14,10 @@ void ReplaceApple(const Snake &snake, const Point &boundries, Apple &apple) {
   } while (snake.OnSnake(apple.GetPos()));
 }
 
-void ListenForKeys(const std::function<void(const Direction&&)> &turn, const std::shared_ptr<bool> playing) {
+void ListenForKeys(const std::function<void(const Direction &&)> &turn,
+                   const std::shared_ptr<bool> playing) {
   while (*playing) {
-    switch (getch())
-    {
+    switch (getch()) {
     case KEY_UP:
       turn(Direction::UP);
       break;
@@ -42,14 +42,17 @@ int main() {
 
   auto snake = std::make_shared<Snake>(Point(3, 3), Direction::DOWN);
   auto apple = std::make_unique<Apple>();
-  const Point &bounderies = Point(20,15);
+  const Point &bounderies = Point(20, 15);
   ReplaceApple(*snake, bounderies, *apple);
   auto playing = std::make_shared<bool>(true);
 
-  auto setDirection = ([snake](const Direction &&direction) -> void{snake->Turn(std::move(direction));});
+  auto setDirection = ([snake](const Direction &&direction) -> void {
+    snake->Turn(std::move(direction));
+  });
   auto thread = std::thread(ListenForKeys, setDirection, playing);
 
-  auto t0 = std::chrono::system_clock::now() - std::chrono::milliseconds(FRAME_TIME);
+  auto t0 =
+      std::chrono::system_clock::now() - std::chrono::milliseconds(FRAME_TIME);
   while (*playing) {
     render.Render(bounderies, *snake, *apple);
 
