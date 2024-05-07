@@ -3,6 +3,7 @@
 #include <curses.h>
 #include <functional>
 #include <memory>
+#include <sstream>
 
 std::ostream &operator<<(std::ostream &ostream, const Direction &dir) {
   switch (dir) {
@@ -14,9 +15,12 @@ std::ostream &operator<<(std::ostream &ostream, const Direction &dir) {
     return ostream << "DOWN";
   case Direction::LEFT:
     return ostream << "LEFT";
-  default:
-    return ostream;
   }
+
+  throw std::runtime_error((std::stringstream()
+                            << "Invalid direction: " << static_cast<int>(dir)
+                            << "\n")
+                               .str());
 }
 const std::unique_ptr<std::string> ToString(const Direction &dir) {
   switch (dir) {
@@ -28,9 +32,12 @@ const std::unique_ptr<std::string> ToString(const Direction &dir) {
     return std::make_unique<std::string>("DOWN");
   case Direction::LEFT:
     return std::make_unique<std::string>("LEFT");
-  default:
-    return std::make_unique<std::string>();
   }
+
+  throw std::runtime_error((std::stringstream()
+                            << "Invalid direction: " << static_cast<int>(dir)
+                            << "\n")
+                               .str());
 }
 
 Point::Point(const Point &point) : x(point.x), y(point.y){};
