@@ -36,24 +36,9 @@ void ListenForKeys(const std::function<void(const Direction&&)> &turn, const std
   }
 }
 
-class Window {
-private:
-  WINDOW *m_window;
-public:
-  Window() {
-    m_window = initscr();
-    keypad(m_window, true);
-    clear();
-    refresh();
-  }
-  ~Window() {
-    endwin();
-  }
-};
-
 int main() {
   srand(time(0));
-  Window();
+  const auto render = Renderer();
 
   auto snake = std::make_shared<Snake>(Point(3, 3), Direction::DOWN);
   auto apple = std::make_unique<Apple>();
@@ -66,7 +51,7 @@ int main() {
 
   auto t0 = std::chrono::system_clock::now() - std::chrono::milliseconds(FRAME_TIME);
   while (*playing) {
-    Render(bounderies, *snake, *apple);
+    render.Render(bounderies, *snake, *apple);
 
     auto dt = std::chrono::system_clock::now() - t0;
     printw("Render time (nanos): %ld\n", static_cast<long>(dt.count()));
@@ -86,6 +71,6 @@ int main() {
     }
   }
 
-  GameOver();
+  render.GameOver();
   thread.join();
 }

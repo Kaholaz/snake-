@@ -2,7 +2,17 @@
 #define RENDER_HPP
 #include "snake.hpp"
 
-void Render(const Point &bounderies, const Snake &snake, const Apple &apple);
-void GameOver();
+class Renderer {
+private:
+  WINDOW *m_window;
+  void Clear() const;
+
+public:
+  Renderer();
+  ~Renderer();
+  void Render(const Point &bounderies, const Snake &snake,
+              const Apple &apple) const;
+  void GameOver() const;
+};
 
 #endif
